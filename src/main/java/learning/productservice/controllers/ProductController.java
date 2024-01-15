@@ -1,6 +1,7 @@
 package learning.productservice.controllers;
 
 import learning.productservice.dtos.FakeStoreProductDto;
+import learning.productservice.exceptions.ProductNotFoundException;
 import learning.productservice.models.Product;
 import learning.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") long id){
+    public ResponseEntity<Product> getProductById(@PathVariable("id") long id) throws ProductNotFoundException {
         return productService.getSingleProduct(id);
     }
 
