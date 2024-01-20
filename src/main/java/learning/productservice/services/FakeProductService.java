@@ -1,6 +1,7 @@
 package learning.productservice.services;
 
 import learning.productservice.dtos.FakeStoreProductDto;
+import learning.productservice.exceptions.ProductNotCreatedException;
 import learning.productservice.exceptions.ProductNotFoundException;
 import learning.productservice.models.Category;
 import learning.productservice.models.Product;
@@ -43,9 +44,12 @@ public class FakeProductService implements ProductService {
     }
 
     @Override
-    public ResponseEntity<List<Product>> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts() throws ProductNotFoundException {
         FakeStoreProductDto[] productDto = restTemplate.getForObject("https://fakestoreapi.com/products/", FakeStoreProductDto[].class);
         List<Product> productList = new ArrayList<>();
+        if(productDto == null){
+            throw  new ProductNotFoundException("No products to show :(");
+        }
         for(FakeStoreProductDto fakeProductDto : productDto){
             productList.add(convertFakeStoreProductToProduct(fakeProductDto));
         }
@@ -53,9 +57,12 @@ public class FakeProductService implements ProductService {
     }
 
     @Override
-    public  ResponseEntity<Product> addProduct(FakeStoreProductDto fakeStoreProductDto){
+    public  ResponseEntity<Product> addProduct(FakeStoreProductDto fakeStoreProductDto) throws ProductNotCreatedException {
         HttpEntity<FakeStoreProductDto> request = new HttpEntity<>(fakeStoreProductDto);
         FakeStoreProductDto productDto = restTemplate.postForObject("https://fakestoreapi.com/products", request, FakeStoreProductDto.class);
+        if(productDto == null){
+            throw new ProductNotCreatedException("Unable not add the product. Null object given.");
+        }
         return new ResponseEntity<>(convertFakeStoreProductToProduct(productDto), HttpStatus.OK);
     }
 

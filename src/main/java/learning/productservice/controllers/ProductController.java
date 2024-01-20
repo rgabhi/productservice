@@ -1,10 +1,13 @@
 package learning.productservice.controllers;
 
+import learning.productservice.dtos.ExceptionDto;
 import learning.productservice.dtos.FakeStoreProductDto;
+import learning.productservice.exceptions.ProductNotCreatedException;
 import learning.productservice.exceptions.ProductNotFoundException;
 import learning.productservice.models.Product;
 import learning.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class ProductController {
         this.productService = productService;
     }
    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts() throws ProductNotFoundException{
         return productService.getAllProducts();
     }
     @GetMapping("/{id}")
@@ -29,7 +32,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody FakeStoreProductDto fakeStoreProductDto){
+    public ResponseEntity<Product> addNewProduct(@RequestBody FakeStoreProductDto fakeStoreProductDto) throws ProductNotCreatedException {
         return productService.addProduct(fakeStoreProductDto);
     }
 
@@ -46,6 +49,14 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id){
         return productService.deleteProduct(id);
+    }
+
+    @ExceptionHandler(ProductNotCreatedException.class)
+    public ResponseEntity<ExceptionDto> handleProductNotCreatedException(ProductNotCreatedException e){
+        ExceptionDto exceptionDto = new ExceptionDto();
+        exceptionDto.setMessage(e.getMessage());
+        exceptionDto.setDetail("Please check you if you provided the response object correctly.");
+        return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
 
 }
