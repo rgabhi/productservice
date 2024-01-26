@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-    public ResponseEntity<Product> getSingleProduct(Long id) throws ProductNotFoundException;
-    public ResponseEntity<Product> addProduct(FakeStoreProductDto fakeStoreProductDto) throws ProductNotCreatedException;
-    public ResponseEntity<List<Product>> getAllProducts() throws ProductNotFoundException;
-    public ResponseEntity<Product> updateProduct(Long id, FakeStoreProductDto fakeStoreProductDto);
-    public ResponseEntity<Product> replaceProduct(Long id, FakeStoreProductDto fakeStoreProductDto);
-    public ResponseEntity<Product> deleteProduct(Long id);
+    public Product getSingleProduct(Long id) throws ProductNotFoundException;
+    public Product addProduct(Product product) throws ProductNotCreatedException;
+    public List<Product> getAllProducts() throws ProductNotFoundException;
+    public Product updateProduct(Long id, Product product) throws ProductNotFoundException;
+    public Product replaceProduct(Long id, Product product) throws ProductNotFoundException;
+    public void deleteProduct(Long id);
 
 }
