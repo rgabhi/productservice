@@ -36,9 +36,7 @@ public class SelfProductService implements ProductService{
     public Product addProduct(Product product) throws ProductNotCreatedException {
 
         Optional<Category> categoryOptional = categoryRepository.findByName(product.getCategory().getName());
-        if(categoryOptional.isEmpty()) {
-            categoryRepository.save(product.getCategory());
-        }else{
+        if(categoryOptional.isPresent()) {
             product.setCategory(categoryOptional.get());
         }
         return productRepository.save(product);
@@ -66,12 +64,12 @@ public class SelfProductService implements ProductService{
         }
         if(updateProduct.getCategory() != null){
             Optional<Category> categoryOptional = categoryRepository.findByName(updateProduct.getCategory().getName());
-            if(categoryOptional.isEmpty()){
-                product.setCategory(categoryRepository.save(updateProduct.getCategory()));
-            }else{
+            if(categoryOptional.isPresent()){
                 product.setCategory(categoryOptional.get());
             }
-
+            else {
+                product.setCategory(updateProduct.getCategory());
+            }
         }
         if(updateProduct.getDescription() != null){
             product.setDescription(updateProduct.getDescription());
