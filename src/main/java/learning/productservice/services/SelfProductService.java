@@ -7,12 +7,13 @@ import learning.productservice.models.Product;
 import learning.productservice.repositories.CategoryRepository;
 import learning.productservice.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Primary
 @Service("selfProductService")
 public class SelfProductService implements ProductService{
     ProductRepository productRepository;
