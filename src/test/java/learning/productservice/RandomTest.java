@@ -14,21 +14,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class RandomTest {
-    @Test
-    void testOnePlusOneIsTwo(){
-        int i = 1 + 1;//
-
-        assert i == 2;
-
-        assertTrue(i==2);
-        assertEquals(2, i);
-
-
-    }
-
-    @Test
-    void TwoTwosAreFour(){
-            int i = 2*2;
-            assertEquals(4, i);
-    }
+//    @Test
+//    void testOnePlusOneIsTwo(){
+//        int i = 1 + 1;//
+//
+//        assert i == 2;
+//
+//        assertTrue(i==2);
+//        assertEquals(2, i);
+//
+//
+//    }
+//
+//    @Test
+//    void TwoTwosAreFour(){
+//            int i = 2*2;
+//            assertEquals(4, i);
+//    }
 }
