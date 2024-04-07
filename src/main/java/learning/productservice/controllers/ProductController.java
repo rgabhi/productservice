@@ -25,7 +25,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
     private AuthenticationCommons authenticationCommons;
-
+    //fakeProductService - use for caching example
     @Autowired
     ProductController(@Qualifier("selfProductService") ProductService productService,
                       RestTemplate restTemplate,
